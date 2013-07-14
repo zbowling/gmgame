@@ -1172,11 +1172,13 @@
 				GCC_PREFIX_HEADER = Cocos2DSimpleGame/Prefix.pch;
 				HEADER_SEARCH_PATHS = "\"Cocos2DSimpleGame/libs/kazmath/include\"";
 				INFOPLIST_FILE = Cocos2DSimpleGame/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1190,11 +1192,13 @@
 				GCC_PREFIX_HEADER = Cocos2DSimpleGame/Prefix.pch;
 				HEADER_SEARCH_PATHS = "\"Cocos2DSimpleGame/libs/kazmath/include\"";
 				INFOPLIST_FILE = Cocos2DSimpleGame/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1219,6 +1223,7 @@
 				35DC324C16530CA500862E62 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

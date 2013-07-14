@@ -11,7 +11,9 @@
 #import "AppDelegate.h"
 #import "IntroLayer.h"
 
-@implementation MyNavigationController
+@implementation MyNavigationController {
+    BOOL running;
+}
 
 // The available orientations should be defined in the Info.plist file.
 // And in iOS 6+ only, you can override it in the Root View controller in the "supportedInterfaceOrientations" method.
@@ -50,6 +52,52 @@
 		[director runWithScene: [IntroLayer scene]];
 	}
 }
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+
+- (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+
+    
+    if (event.subtype == UIEventSubtypeMotionShake) {
+        if (!running) {
+            running = YES;
+            
+            UIView *glview = [[CCDirector sharedDirector] openGLView];
+            CALayer *layer = glview.layer;
+            CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
+            rotationAndPerspectiveTransform.m34 = 1.0 / -500;
+            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -20.0f * M_PI / 180.0f, 0.0f, 1.0f, 0.0f);
+            layer.transform = rotationAndPerspectiveTransform;
+            
+            [UIView animateWithDuration:5 delay:0 options:UIViewAnimationOptionAutoreverse|UIViewAnimationOptionCurveLinear|UIViewAnimationOptionRepeat animations:^{
+                UIView *glview = [[CCDirector sharedDirector] openGLView];
+                CALayer *layer = glview.layer;
+                CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
+                rotationAndPerspectiveTransform.m34 = 1.0 / -500;
+                rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 20.0f * M_PI / 180.0f, 0.0f, 1.0f, 0.0f);
+                layer.transform = rotationAndPerspectiveTransform;
+            } completion:^(BOOL finished) {
+                
+            }];
+        } else {
+            running = NO;
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationBeginsFromCurrentState:YES];
+            [UIView setAnimationDuration:0.1];
+            [UIView setAnimationCurve: UIViewAnimationCurveLinear];
+            [[CCDirector sharedDirector] openGLView].transform = CGAffineTransformIdentity;
+            [UIView commitAnimations];
+            
+
+        }
+
+        
+    }
+}
+
 @end
 
 
@@ -114,6 +162,7 @@
 	// Create a Navigation Controller with the Director
 	navController_ = [[MyNavigationController alloc] initWithRootViewController:director_];
 	navController_.navigationBarHidden = YES;
+    
 
 	// for rotation and other messages
 	[director_ setDelegate:navController_];
@@ -123,8 +172,15 @@
 	
 	// make main window visible
 	[window_ makeKeyAndVisible];
+
+    [navController_ becomeFirstResponder];
 	
 	return YES;
+}
+
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
 }
 
 // getting a call, pause the game
